@@ -14,10 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.ImageIcon;
 
 class Game extends JFrame {
-    private int width = 800, height = 650, row = 10, col = 50;
+    private int width = 800, height = 650, row = 10, col = 10;
     private int mines = 99;
     Game() {
         setSize(width, height);
@@ -29,6 +28,7 @@ class Game extends JFrame {
         MenuBar menu = new MenuBar();
         setMenuBar(menu);
 
+        //first menu : "Game"
         Menu file = new Menu("Game");
         MenuItem restart = new MenuItem ("New Game");
         file.add(restart);
@@ -36,6 +36,17 @@ class Game extends JFrame {
         file.add(end);
         menu.add(file);
 
+        //second menu : "Level"
+        Menu level = new Menu("Level");
+        MenuItem beginner = new MenuItem("Beginner");
+        MenuItem intermediate = new MenuItem("Intermediate");
+        MenuItem expert = new MenuItem("Expert");
+        MenuItem custom = new MenuItem("Custom");
+        level.add(beginner);
+        level.add(intermediate);
+        level.add(expert);
+        level.add(custom);
+        menu.add(level);
         setVisible(true);
     }
 }
