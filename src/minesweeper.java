@@ -47,6 +47,7 @@ class Game extends JFrame {
         level.add(expert);
         level.add(custom);
         menu.add(level);
+
         setVisible(true);
     }
 }
