@@ -26,17 +26,13 @@ class Game extends JFrame {
         setTitle("Minesweeper");
         setLocationRelativeTo(this);
 
-        JPanel topPenal = new JPanel();
+        MenuBar menu = new MenuBar();
+        setMenuBar(menu);
 
-        JLabel minesnum = new JLabel("Mines Left : " + mines);
-        topPenal.add(minesnum);
+        Menu file = new Menu("Game");
+        MenuItem backindex = new MenuItem ("Back to Main Menu");
+        file.add(backindex);
 
-        JButton restart = new JButton("Restart");
-        restart.setActionCommand("r");
-
-        topPenal.add(restart);
-
-        add(topPenal);
         setVisible(true);
     }
 }
