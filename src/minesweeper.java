@@ -20,9 +20,9 @@ class Game extends JFrame {
         model.addColumn("Height");
         model.addColumn("Width");
         model.addColumn("Mines");
-        NumberFormatter numformate = new NumberFormatter();
-        numformate.setAllowsInvalid(false);
-        JFormattedTextField textHeight = new JFormattedTextField(numformate);
+        NumberFormatter f = new NumberFormatter();
+        f.setAllowsInvalid(false);
+        JFormattedTextField textHeight = new JFormattedTextField(f);
         textHeight.setColumns(5);
         JTextField test = new JTextField(10);
         add(new JScrollPane(table));
