@@ -18,6 +18,7 @@ import java.awt.event.MouseListener;
 class Game extends JFrame {
     private int width = 800, height = 650, row = 10, col = 10;
     private int mines = 99;
+
     Game() {
         setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,7 +31,7 @@ class Game extends JFrame {
 
         //first menu : "Game"
         Menu file = new Menu("Game");
-        MenuItem restart = new MenuItem ("New Game");
+        MenuItem restart = new MenuItem("New Game");
         file.add(restart);
         MenuItem end = new MenuItem("End Game");
         file.add(end);
@@ -48,8 +49,14 @@ class Game extends JFrame {
         level.add(custom);
         menu.add(level);
 
+        //interface
+        JPanel minePanel = new JPanel();
+        add(minePanel);
+
         setVisible(true);
     }
+
+
 }
 
 public class minesweeper {
