@@ -30,8 +30,11 @@ class Game extends JFrame {
         setMenuBar(menu);
 
         Menu file = new Menu("Game");
-        MenuItem backindex = new MenuItem ("Back to Main Menu");
-        file.add(backindex);
+        MenuItem restart = new MenuItem ("New Game");
+        file.add(restart);
+        MenuItem end = new MenuItem("End Game");
+        file.add(end);
+        menu.add(file);
 
         setVisible(true);
     }
