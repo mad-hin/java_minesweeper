@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class Game extends JFrame implements ActionListener{//, MouseListener {
+class Game extends JFrame implements ActionListener {//, MouseListener {
     private int width = 800, height = 650, row = 10, col = 10;
     private int mines = 99;
     private boolean[][] isTurned;
@@ -61,17 +61,17 @@ class Game extends JFrame implements ActionListener{//, MouseListener {
         menu.add(level);
 
         //interface
-        JPanel minePanel = new JPanel();
-        minePanel.setLayout(new GridLayout(col,row));
+        minePanel = new JPanel();
+        minePanel.setLayout(new GridLayout(col, row));
         //minePanel.addMouseListener(this);
 
         //buttons (a.k.a mines)
-        buttons= new JButton[col][row];
-        for(int i = 0; i < col; i++){
-            for (int j = 0; j < row;j++){
+        buttons = new JButton[col][row];
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < row; j++) {
                 buttons[i][j] = new JButton();
                 buttons[i][j].setBackground(Color.WHITE);
-                buttons[i][j].setActionCommand(i+" "+j);
+                buttons[i][j].setActionCommand(i + " " + j);
                 minePanel.add(buttons[i][j]);
                 //buttons[i][j].addMouseListener(this);
                 buttons[i][j].addActionListener(this);
@@ -79,16 +79,17 @@ class Game extends JFrame implements ActionListener{//, MouseListener {
         }
         add(minePanel, BorderLayout.CENTER);
 
+        gameRunning = false;
         //make it visible
         setVisible(true);
     }
 
-    public void boomview (){
+    public void boomview() {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
     }
 
