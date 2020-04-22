@@ -15,7 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class Game extends JFrame {
+class Game extends JFrame implements ActionListener {
     private int width = 800, height = 650, row = 10, col = 10;
     private int mines = 99;
 
@@ -32,6 +32,8 @@ class Game extends JFrame {
         //first menu : "Game"
         Menu file = new Menu("Game");
         MenuItem restart = new MenuItem("New Game");
+        restart.setActionCommand("re");
+        restart.addActionListener(this);
         file.add(restart);
         MenuItem end = new MenuItem("End Game");
         file.add(end);
@@ -56,7 +58,14 @@ class Game extends JFrame {
         setVisible(true);
     }
 
+    public void boomview (){
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        String command = e.getActionCommand();
+    }
 }
 
 public class minesweeper {
