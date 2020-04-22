@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 class Game extends JFrame implements ActionListener {//, MouseListener {
-    private int width = 800, height = 650, row = 9, col = 9;
+    private int width = 800, height = 650, row, col;
     private int mines = 99;
     private boolean[][] isTurned;
     private boolean gameOver;
@@ -20,7 +20,9 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
     private JPanel minePanel;
     private JLabel gameMessage;
 
-    Game() {
+    Game(int bx, int by) {
+        row = bx;
+        col = by;
         setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -39,7 +41,11 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
         MenuItem end = new MenuItem("End Game");
         end.setActionCommand("endGame");
         end.addActionListener(this);
+        MenuItem exit = new MenuItem("Exit");
+        exit.setActionCommand("ot");
+        exit.addActionListener(this);
         file.add(end);
+        file.add(exit);
         menu.add(file);
 
         //second menu : "Level"
@@ -113,6 +119,6 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
 
 public class minesweeper {
     public static void main(String[] args) {
-        Game g = new Game();
+        Game g = new Game(9, 9);
     }
 }
