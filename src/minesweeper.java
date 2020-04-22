@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 class Game extends JFrame implements ActionListener {//, MouseListener {
-    private int width = 800, height = 650, row = 10, col = 10;
+    private int width = 800, height = 650, row = 9, col = 9;
     private int mines = 99;
     private boolean[][] isTurned;
     private boolean gameOver;
@@ -53,11 +53,11 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
         MenuItem expert = new MenuItem("Expert");
         expert.setActionCommand("exp");
         expert.addActionListener(this);
-        MenuItem custom = new MenuItem("Custom");
+        //MenuItem custom = new MenuItem("Custom");
         level.add(beginner);
         level.add(intermediate);
         level.add(expert);
-        level.add(custom);
+        //level.add(custom);
         menu.add(level);
 
         //interface
