@@ -97,6 +97,10 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+
+        if(command.equals("ot")){
+            System.exit(0);
+        }
     }
 
     /*@Override
