@@ -91,7 +91,7 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
     }
 
     public void boomview() {
-        // TODO Auto-generated method stub
+        // TODO
     }
 
     @Override
@@ -105,19 +105,19 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
 
     /*@Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
+        // TODO
     }
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
+        // TODO
     }
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
+        // TODO
     }
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
+        // TODO
     }*/
 }
 
