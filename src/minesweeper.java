@@ -7,9 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class Game extends JFrame implements ActionListener , MouseListener {
-    private int width = 800, height = 650, row, col;
-    private int mines = 99;
+class Game extends JFrame implements ActionListener, MouseListener {
+    private int width = 720, height = 720, row = 16, col = 16;
+    private int mines = 10;
     private boolean[][] isTurned;
     private boolean gameOver;
     private boolean gameRunning;
@@ -17,8 +17,9 @@ class Game extends JFrame implements ActionListener , MouseListener {
     private boolean[][] map;
     private boolean[][] isPressed;
     private JButton[][] buttons;
-    private JPanel minePanel;
+    private JPanel minePanel, bombPanel;
     private JLabel gameMessage;
+    private int[] first_click_location = new int[2];
 
     Game() {
         setSize(width, height);
@@ -26,7 +27,6 @@ class Game extends JFrame implements ActionListener , MouseListener {
         setResizable(false);
         setTitle("Minesweeper");
         setLocationRelativeTo(this);
-
         MenuBar menu = new MenuBar();
         setMenuBar(menu);
 
@@ -66,13 +66,25 @@ class Game extends JFrame implements ActionListener , MouseListener {
 
         //interface
         minePanel = new JPanel();
-        minePanel.setLayout(new GridLayout(col, row));
-        //minePanel.addMouseListener(this);
+        boomview(col, row, mines);
+        add(minePanel, BorderLayout.CENTER);
 
-        //buttons (a.k.a mines)
-        buttons = new JButton[col][row];
+        gameRunning = false;
+        //make it visible
+        setVisible(true);
+    }
+
+    public void boomview(int block_width, int block_height, int bomballnum) {
+        int mineCount = 0, location = 0;
+        buttons = new JButton[block_width][block_height];
+        aroundBombNum = new int[block_width][block_height];
+        map = new boolean[block_width][block_height];
+        first_click_location = new int[2];
+        minePanel.setLayout(new GridLayout(block_width, block_height));
+        gameOver = false;
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
+                map[i][j] = false;
                 buttons[i][j] = new JButton();
                 buttons[i][j].setBackground(Color.WHITE);
                 buttons[i][j].setActionCommand(i + " " + j);
@@ -81,23 +93,39 @@ class Game extends JFrame implements ActionListener , MouseListener {
                 buttons[i][j].addActionListener(this);
             }
         }
-        add(minePanel, BorderLayout.CENTER);
-
-        gameRunning = false;
-        //make it visible
-        setVisible(true);
+        minePanel.revalidate();
+        minePanel.repaint();
+        System.out.println(block_width+" "+ block_height+" ");
     }
 
-    public void boomview() {
-        // TODO
+    public void clear (){
+        gameOver = false;
+        setSize(width, height);
+        for(int i = 0; i < col; i++) {
+            for(int j = 0; j < row; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setBackground(Color.WHITE);
+            }
+        }
+        minePanel.removeAll();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if(command.equals("ot")){
+        if (command.equals("ot")) {
             System.exit(0);
+        } else if (command.equals("beg")) {
+            clear();
+            col = 9;
+            row = 9;
+            boomview(9, 9, 10);
+        } else if (command.equals("mid")) {
+            col = 16;
+            row = 16;
+            boomview(16, 16, 30);
+            System.out.println("mid pressed");
         }
     }
 
