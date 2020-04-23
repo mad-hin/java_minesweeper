@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 class Game extends JFrame implements ActionListener, MouseListener {
-    private int width = 720, height = 720, row = 9, col = 9;
+    private int width = 480, height = 480, row = 9, col = 9;
     private int mines = 10;
     private boolean[][] isTurned;
     private boolean gameOver;
@@ -99,9 +99,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
         System.out.println(block_width+" "+ block_height+" ");
     }
 
-    public void clear (){
+    public void clear (int w,int h){
         gameOver = false;
-        setSize(width, height);
+        setSize(w, h);
         for(int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
                 buttons[i][j].setText("");
@@ -119,16 +119,22 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 System.exit(0);
                 break;
             case "beg":
-                clear();
+                clear(480,480);
                 col = 9;
                 row = 9;
                 boomview(9, 9, 10);
                 break;
             case "mid":
+                clear(480,480);
                 col = 16;
                 row = 16;
                 boomview(16, 16, 30);
                 break;
+            case"exp":
+                clear(900,480);
+                col = 16;
+                row = 30;
+                boomview(col, row, 30);
         }
     }
 
