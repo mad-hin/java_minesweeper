@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class Game extends JFrame implements ActionListener , MouseListener {
+public class minesweeper extends JFrame implements ActionListener , MouseListener {
     private int width = 800, height = 650, row, col;
     private int mines = 99;
     private boolean[][] isTurned;
@@ -20,7 +20,7 @@ class Game extends JFrame implements ActionListener , MouseListener {
     private JPanel minePanel;
     private JLabel gameMessage;
 
-    Game(int bx, int by) {
+    public minesweeper(int bx, int by) {
         row = bx;
         col = by;
         setSize(width, height);
@@ -100,6 +100,7 @@ class Game extends JFrame implements ActionListener , MouseListener {
 
         if(command.equals("ot")){
             System.exit(0);
+        }else if (command.equals("beg")){
         }
     }
 
@@ -127,11 +128,8 @@ class Game extends JFrame implements ActionListener , MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-}
-
-public class minesweeper {
     public static void main(String[] args) {
-        Game g = new Game(9, 9);
+        new minesweeper(9, 9);
     }
 }
+
