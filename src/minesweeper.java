@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class Game extends JFrame implements ActionListener {//, MouseListener {
+class Game extends JFrame implements ActionListener , MouseListener {
     private int width = 800, height = 650, row, col;
     private int mines = 99;
     private boolean[][] isTurned;
@@ -79,7 +79,7 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
                 buttons[i][j].setBackground(Color.WHITE);
                 buttons[i][j].setActionCommand(i + " " + j);
                 minePanel.add(buttons[i][j]);
-                //buttons[i][j].addMouseListener(this);
+                buttons[i][j].addMouseListener(this);
                 buttons[i][j].addActionListener(this);
             }
         }
@@ -103,22 +103,31 @@ class Game extends JFrame implements ActionListener {//, MouseListener {
         }
     }
 
-    /*@Override
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
     public void mousePressed(MouseEvent e) {
-        // TODO
+
     }
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO
-    }
-    @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO
-    }
+
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO
-    }*/
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }
 
 public class minesweeper {
