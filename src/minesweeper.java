@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 class Game extends JFrame implements ActionListener, MouseListener {
-    private int width = 720, height = 720, row = 16, col = 16;
+    private int width = 720, height = 720, row = 9, col = 9;
     private int mines = 10;
     private boolean[][] isTurned;
     private boolean gameOver;
@@ -75,6 +75,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     }
 
     public void boomview(int block_width, int block_height, int bomballnum) {
+        minePanel.removeAll();
         int mineCount = 0, location = 0;
         buttons = new JButton[block_width][block_height];
         aroundBombNum = new int[block_width][block_height];
@@ -102,30 +103,32 @@ class Game extends JFrame implements ActionListener, MouseListener {
         gameOver = false;
         setSize(width, height);
         for(int i = 0; i < col; i++) {
-            for(int j = 0; j < row; j++) {
+            for (int j = 0; j < row; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setBackground(Color.WHITE);
             }
         }
-        minePanel.removeAll();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (command.equals("ot")) {
-            System.exit(0);
-        } else if (command.equals("beg")) {
-            clear();
-            col = 9;
-            row = 9;
-            boomview(9, 9, 10);
-        } else if (command.equals("mid")) {
-            col = 16;
-            row = 16;
-            boomview(16, 16, 30);
-            System.out.println("mid pressed");
+        switch (command){
+            case "ot" :
+                System.exit(0);
+                break;
+            case "beg":
+                clear();
+                col = 9;
+                row = 9;
+                boomview(9, 9, 10);
+                break;
+            case "mid":
+                col = 16;
+                row = 16;
+                boomview(16, 16, 30);
+                break;
         }
     }
 
