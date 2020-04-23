@@ -20,9 +20,7 @@ class Game extends JFrame implements ActionListener , MouseListener {
     private JPanel minePanel;
     private JLabel gameMessage;
 
-    Game(int bx, int by) {
-        row = bx;
-        col = by;
+    Game() {
         setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -132,6 +130,6 @@ class Game extends JFrame implements ActionListener , MouseListener {
 
 public class minesweeper {
     public static void main(String[] args) {
-        Game g = new Game(9, 9);
+        Game g = new Game();
     }
 }
