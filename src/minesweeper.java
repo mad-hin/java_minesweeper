@@ -96,13 +96,13 @@ class Game extends JFrame implements ActionListener, MouseListener {
         }
         minePanel.revalidate();
         minePanel.repaint();
-        System.out.println(block_width+" "+ block_height+" ");
+        System.out.println(block_width + " " + block_height + " ");
     }
 
-    public void clear (int w,int h){
+    public void clear(int w, int h) {
         gameOver = false;
         setSize(w, h);
-        for(int i = 0; i < col; i++) {
+        for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setBackground(Color.WHITE);
@@ -114,24 +114,24 @@ class Game extends JFrame implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        switch (command){
-            case "ot" :
+        switch (command) {
+            case "ot":
                 System.exit(0);
                 break;
             case "beg":
-                clear(480,480);
+                clear(480, 480);
                 col = 9;
                 row = 9;
                 boomview(9, 9, 10);
                 break;
             case "mid":
-                clear(480,480);
+                clear(480, 480);
                 col = 16;
                 row = 16;
                 boomview(16, 16, 30);
                 break;
-            case"exp":
-                clear(900,480);
+            case "exp":
+                clear(900, 480);
                 col = 16;
                 row = 30;
                 boomview(col, row, 30);
