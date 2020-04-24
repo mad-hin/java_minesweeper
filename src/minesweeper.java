@@ -215,7 +215,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
                     for (int s = 0; s < 8; s++) {
                         int fx = tx + direct[s][0];
                         int fy = ty + direct[s][1];
-                        boolean spread = false;
 
                         if (inRange(fx, fy) && !isPressed[fx][fy]) {
                             isPressed[fx][fy] = true;
@@ -293,9 +292,28 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 check(x, y);
                 isPressed[x][y] = true;
                 gameRunning = true;
-            } else if (!gameOver && !isPressed[x][y]) {
+            } else if (!gameOver && !isPressed[x][y] && !isFlagged[x][y]) {
                 isPressed[x][y] = true;
                 check(x, y);
+            }
+        } else if (e.getButton() == MouseEvent.BUTTON2) {
+            for (int s = 0; s < 8; s++) {
+                int fx = x + direct[s][0];
+                int fy = y + direct[s][1];
+                if (inRange(fx, fy)) {
+                    if (!map[fx][fy] && !isPressed[fx][fy] && !isFlagged[x][y]) {
+                        turn(fx, fy);
+                        isPressed[fx][fy] = true;
+                    }
+                }
+            }
+        }else if(e.getButton() == MouseEvent.BUTTON3){
+            if(!isFlagged[x][y]){
+                buttons[x][y].setBackground(Color.yellow);
+                isFlagged[x][y] = true;
+            }else{
+                isFlagged[x][y]=false;
+                buttons[x][y].setBackground(Color.WHITE);
             }
         }
     }
