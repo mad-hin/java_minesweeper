@@ -22,7 +22,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private JPanel minePanel, topPenel;
     private JLabel gameMessage, mineNum, time;
     private int timeCount = 0;
-    private boolean timeContinue = true;
 
     Game() {
         setSize(width, height);
@@ -84,9 +83,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
         mineNum = new JLabel();
         gameMessage = new JLabel();
         time = new JLabel();
-        topPenel.add(mineNum);
-        topPenel.add(gameMessage);
-        topPenel.add(time);
+        topPenel.add(mineNum, BorderLayout.WEST);
+        topPenel.add(gameMessage, BorderLayout.CENTER);
+        topPenel.add(time, BorderLayout.EAST);
 
         add(topPenel, BorderLayout.NORTH);
         view(col, row);
@@ -110,16 +109,16 @@ class Game extends JFrame implements ActionListener, MouseListener {
         gameOver = false;
 
         if (block_height == 9 && block_width == 9) {
-            gameMessage.setText("Level : Beginner");
+            gameMessage.setText("| Level : Beginner |");
         } else if (block_height == 16 && block_width == 16) {
-            gameMessage.setText("Level : Intermediate");
+            gameMessage.setText("| Level : Intermediate |");
         } else {
-            gameMessage.setText("Level : Expert");
+            gameMessage.setText("| Level : Expert |");
         }
 
-        mineNum.setText("Mines : " + mineCount);
+        mineNum.setText("| Mines : " + mineCount);
 
-        time.setText("Time ： " + (timeCount));
+        time.setText("Time ： " + (timeCount) + " |");
 
         //add buttons
         for (int i = 0; i < col; i++) {
@@ -162,6 +161,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     //initialize the mines
     public void startGame(int sx, int sy) {
         mineCount = 0;
+        gameRunning = true;
         while (mineCount != mines) {
             int x = (int) (Math.random() * col);
             int y = (int) (Math.random() * row);
@@ -181,8 +181,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         }
         TimerTask timertask = new TimerTask() {
             public void run() {
-                if (timeContinue) {
-                    time.setText("Time ： " + (timeCount++));
+                if (!gameOver && gameRunning) {
+                    time.setText("Time ： " + (timeCount++) + " |");
                 }
             }
         };
@@ -270,6 +270,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
     }
 
     public void showAll() {
+        gameOver = true;
+        gameRunning =true;
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
                 if (map[i][j]) {
@@ -335,7 +337,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 startGame(x, y);
                 check(x, y);
                 isPressed[x][y] = true;
-                gameRunning = true;
                 mineNum.setText("Mines : " + mineCount);
             } else if (!gameOver && !isPressed[x][y] && !isFlagged[x][y]) {
                 isPressed[x][y] = true;
