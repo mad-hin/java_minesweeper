@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 class Game extends JFrame implements ActionListener, MouseListener {
     private int width = 480, height = 480, row = 9, col = 9;
     private int mines = 10;
+    private int mineCount;
     private boolean[][] isTurned;
     private boolean gameOver;
     private boolean gameRunning;
@@ -107,6 +108,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
                 map[i][j] = false;
+                isPressed[i][j] = false;
                 buttons[i][j] = new JButton();
                 buttons[i][j].setBackground(Color.WHITE);
                 buttons[i][j].setActionCommand(i + " " + j);
@@ -139,7 +141,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     //initialize the mines
     public void startGame(int sx, int sy) {
-        int mineCount = 0;
+        mineCount = 0;
         while (mineCount != mines) {
             int x = (int) (Math.random() * col);
             int y = (int) (Math.random() * row);
@@ -177,7 +179,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     //check if game over
     public void check(int x, int y) {
-        
+        if(map[x][y]){
+
+        }
     }
 
     @Override
