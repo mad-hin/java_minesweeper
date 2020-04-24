@@ -137,6 +137,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         minePanel.removeAll();
     }
 
+    //initialize the mines
     public void startGame(int sx, int sy) {
         int mineCount = 0;
         while (mineCount != mines) {
@@ -172,6 +173,11 @@ class Game extends JFrame implements ActionListener, MouseListener {
             }
             System.out.println();
         }
+    }
+
+    //check if game over
+    public void check(int x, int y) {
+        
     }
 
     @Override
