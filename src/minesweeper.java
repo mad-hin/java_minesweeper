@@ -75,7 +75,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
         //interface
         minePanel = new JPanel();
+        gameMessage = new JLabel();
         view(col, row, mines);
+        add(gameMessage, BorderLayout.NORTH);
         add(minePanel, BorderLayout.CENTER);
 
         gameRunning = false;
@@ -94,6 +96,14 @@ class Game extends JFrame implements ActionListener, MouseListener {
         first_click_location = new int[2];
         minePanel.setLayout(new GridLayout(block_width, block_height));
         gameOver = false;
+
+        if (block_height == 9 && block_width == 9) {
+            gameMessage.setText("Beginner");
+        } else if (block_height == 16 && block_width == 16) {
+            gameMessage.setText("Intermediate");
+        }else{
+            gameMessage.setText("Expert");
+        }
 
         //add buttons
         for (int i = 0; i < col; i++) {
