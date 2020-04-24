@@ -76,7 +76,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         //interface
         minePanel = new JPanel();
         gameMessage = new JLabel();
-        view(col, row, mines);
+        view(col, row);
         add(gameMessage, BorderLayout.NORTH);
         add(minePanel, BorderLayout.CENTER);
 
@@ -87,7 +87,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         setVisible(true);
     }
 
-    public void view(int block_width, int block_height, int bomballnum) {
+    public void view(int block_width, int block_height) {
         minePanel.removeAll();
         int mineCount = 0, location = 0;
         buttons = new JButton[block_width][block_height];
@@ -101,7 +101,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
             gameMessage.setText("Level : Beginner");
         } else if (block_height == 16 && block_width == 16) {
             gameMessage.setText("Level : Intermediate");
-        }else{
+        } else {
             gameMessage.setText("Level : Expert");
         }
 
@@ -138,6 +138,10 @@ class Game extends JFrame implements ActionListener, MouseListener {
         minePanel.removeAll();
     }
 
+    public void startGame(int sx, int sy) {
+        
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -150,19 +154,22 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 clear(480, 480);
                 col = 9;
                 row = 9;
-                view(9, 9, 10);
+                mines = 10;
+                view(9, 9);
                 break;
             case "mid":
                 clear(480, 480);
                 col = 16;
                 row = 16;
-                view(16, 16, 30);
+                mines = 30;
+                view(16, 16);
                 break;
             case "exp":
                 clear(890, 480);
                 col = 16;
                 row = 30;
-                view(col, row, 30);
+                mines = 99;
+                view(col, row);
                 break;
             case "re":
                 clear(width, height);
