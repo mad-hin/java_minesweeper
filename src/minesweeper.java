@@ -1,11 +1,11 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.TimerTask;
+import java.util.Timer;
 
 class Game extends JFrame implements ActionListener, MouseListener {
     private int[][] direct = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
@@ -20,7 +20,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private boolean[][] isFlagged;
     private JButton[][] buttons;
     private JPanel minePanel, topPenel;
-    private JLabel gameMessage, mineNum;
+    private JLabel gameMessage, mineNum, time;
+    private int timeCount = 0;
+    private boolean timeContinue = true;
 
     Game() {
         setSize(width, height);
@@ -79,10 +81,12 @@ class Game extends JFrame implements ActionListener, MouseListener {
         topPenel = new JPanel();
 
         //Labels on top
-        mineNum =new JLabel();
+        mineNum = new JLabel();
         gameMessage = new JLabel();
+        time = new JLabel();
         topPenel.add(mineNum);
         topPenel.add(gameMessage);
+        topPenel.add(time);
 
         add(topPenel, BorderLayout.NORTH);
         view(col, row);
@@ -115,6 +119,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
         mineNum.setText("Mines : " + mineCount);
 
+        time.setText("Time ： " + (timeCount));
+
         //add buttons
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
@@ -141,6 +147,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         gameRunning = false;
         width = w;
         height = h;
+        timeCount = 0;
         setSize(w, h);
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
@@ -172,6 +179,14 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
+        TimerTask timertask = new TimerTask() {
+            public void run() {
+                if (timeContinue) {
+                    time.setText("Time ： " + (timeCount++));
+                }
+            }
+        };
+        new Timer().scheduleAtFixedRate(timertask, 0, 1000);
         System.out.println("Mines generated");
         printMap();
     }
@@ -200,7 +215,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                         buttons[i][j].setBackground(Color.RED);
                     } else if (!map[i][j] && isFlagged[i][j]) {
                         buttons[i][j].setBackground(Color.yellow);
-                    }else if (map[i][j] && isFlagged[i][j]){
+                    } else if (map[i][j] && isFlagged[i][j]) {
                         buttons[i][j].setBackground(Color.GREEN);
                     }
                 }
@@ -359,9 +374,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
                             }
                         }
                     }
-                    if (all){
-                        JOptionPane.showMessageDialog(this,"Game Over", "Congratulations, all mines have been solved",JOptionPane.INFORMATION_MESSAGE);
-                    }else{
+                    if (all) {
+                        JOptionPane.showMessageDialog(this, "Game Over", "Congratulations, all mines have been solved", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
                         JOptionPane.showMessageDialog(this, "Game Over", "Sorry, not all mines have been solved", JOptionPane.WARNING_MESSAGE);
                         showAll();
                     }
