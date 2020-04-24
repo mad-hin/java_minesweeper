@@ -325,6 +325,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 check(x, y);
             }
         }
+
         if (e.getButton() == MouseEvent.BUTTON2) {
             System.out.println("button2 pressed");
             for (int s = 0; s < 8; s++) {
@@ -340,14 +341,28 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
+
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (!isFlagged[x][y]) {
                 buttons[x][y].setBackground(Color.yellow);
                 isFlagged[x][y] = true;
                 mineCount--;
                 mineNum.setText("Mines : " + mineCount);
+                boolean all = true;
                 if (mineCount == 0) {
-
+                    for (int i = 0; i < col; i++) {
+                        for (int j = 0; j < row; j++) {
+                            if (!(map[i][j] && isFlagged[i][j])) {
+                                all = false;
+                            }
+                        }
+                    }
+                    if (all){
+                        JOptionPane.showMessageDialog(this,"Game Over", "Congratulations, all mines have been solved",JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Game Over", "Sorry, not all mines have been solved", JOptionPane.WARNING_MESSAGE);
+                        showAll();
+                    }
                 }
             } else if (isFlagged[x][y]) {
                 isFlagged[x][y] = false;
