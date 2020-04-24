@@ -11,8 +11,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private int[][] direct = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
     private int width = 480, height = 480, row = 9, col = 9;
     private int mines = 10;
-    private int mineCount;
-    private boolean[][] isTurned;
+    private int mineCount = 0;
     private boolean gameOver;
     private boolean gameRunning;
     private int[][] aroundBombNum;
@@ -20,8 +19,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private boolean[][] isPressed;
     private boolean[][] isFlagged;
     private JButton[][] buttons;
-    private JPanel minePanel,topPenel;
-    private JLabel gameMessage;
+    private JPanel minePanel, topPenel;
+    private JLabel gameMessage, mineNum;
 
     Game() {
         setSize(width, height);
@@ -78,9 +77,14 @@ class Game extends JFrame implements ActionListener, MouseListener {
         //interface
         minePanel = new JPanel();
         topPenel = new JPanel();
+
+        //Labels on top
+        mineNum =new JLabel();
         gameMessage = new JLabel();
+        topPenel.add(mineNum);
         topPenel.add(gameMessage);
-        add(topPenel,BorderLayout.NORTH);
+
+        add(topPenel, BorderLayout.NORTH);
         view(col, row);
         add(minePanel, BorderLayout.CENTER);
 
@@ -93,7 +97,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     public void view(int block_width, int block_height) {
         minePanel.removeAll();
-        int location = 0;
         buttons = new JButton[block_width][block_height];
         aroundBombNum = new int[block_width][block_height];
         map = new boolean[block_width][block_height];
@@ -109,6 +112,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         } else {
             gameMessage.setText("Level : Expert");
         }
+
+        mineNum.setText("Mines : " + mineCount);
 
         //add buttons
         for (int i = 0; i < col; i++) {
@@ -218,7 +223,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                         int fx = tx + direct[s][0];
                         int fy = ty + direct[s][1];
 
-                        if (inRange(fx, fy) ) {
+                        if (inRange(fx, fy)) {
                             if (!isPressed[fx][fy]) {
                                 isPressed[fx][fy] = true;
                                 queue_x[push] = fx;
@@ -244,8 +249,22 @@ class Game extends JFrame implements ActionListener, MouseListener {
         if (aroundBombNum[x][y] > 0) {
             buttons[x][y].setText(Integer.toString(aroundBombNum[x][y]));
         }
-        //isTurned[x][y] = true;
         isPressed[x][y] = true;
+    }
+
+    public void showAll() {
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < row; j++) {
+                if (map[i][j]) {
+                    buttons[i][j].setBackground(Color.RED);
+                } else {
+                    buttons[i][j].setBackground(Color.lightGray);
+                    if (aroundBombNum[i][j] != 0) {
+                        buttons[i][j].setText(Integer.toString(aroundBombNum[i][j]));
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -279,6 +298,10 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 break;
             case "re":
                 clear(width, height);
+                view(col, row);
+                break;
+            case "endGame":
+                showAll();
                 break;
         }
     }
@@ -296,6 +319,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 check(x, y);
                 isPressed[x][y] = true;
                 gameRunning = true;
+                mineNum.setText("Mines : " + mineCount);
             } else if (!gameOver && !isPressed[x][y] && !isFlagged[x][y]) {
                 isPressed[x][y] = true;
                 check(x, y);
@@ -306,10 +330,10 @@ class Game extends JFrame implements ActionListener, MouseListener {
             for (int s = 0; s < 8; s++) {
                 int fx = x + direct[s][0];
                 int fy = y + direct[s][1];
-                System.out.println(fx+" "+fy);
+                System.out.println(fx + " " + fy);
                 if (inRange(fx, fy)) {
                     if (!map[fx][fy]) {
-                        System.out.println(fx+" "+fy);
+                        System.out.println(fx + " " + fy);
                         turn(fx, fy);
                         isPressed[fx][fy] = true;
                     }
@@ -321,13 +345,15 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 buttons[x][y].setBackground(Color.yellow);
                 isFlagged[x][y] = true;
                 mineCount--;
-                if (mineCount == 0){
+                mineNum.setText("Mines : " + mineCount);
+                if (mineCount == 0) {
 
                 }
             } else if (isFlagged[x][y]) {
                 isFlagged[x][y] = false;
                 buttons[x][y].setBackground(Color.WHITE);
                 mineCount++;
+                mineNum.setText("Mines : " + mineCount);
             }
         }
     }
