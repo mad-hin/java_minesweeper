@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 class Game extends JFrame implements ActionListener, MouseListener {
+    private int[][] direct = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
     private int width = 480, height = 480, row = 9, col = 9;
     private int mines = 10;
     private int mineCount;
@@ -198,7 +199,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
             gameOver = true;
             JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.WARNING_MESSAGE);
         } else {
-            int[][] direct = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
             int[] queue_x = new int[col * row];
             int[] queue_y = new int[col * row];
             int pop = 0, push = 0;
