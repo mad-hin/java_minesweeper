@@ -89,7 +89,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     public void view(int block_width, int block_height) {
         minePanel.removeAll();
-        int mineCount = 0, location = 0;
+        int location = 0;
         buttons = new JButton[block_width][block_height];
         aroundBombNum = new int[block_width][block_height];
         map = new boolean[block_width][block_height];
@@ -139,7 +139,24 @@ class Game extends JFrame implements ActionListener, MouseListener {
     }
 
     public void startGame(int sx, int sy) {
-        
+        int mineCount = 0;
+        while (mineCount != mines) {
+            int x = (int) (Math.random() * col);
+            int y = (int) (Math.random() * row);
+            if (x != sx && y != sy) {
+                if (!map[x][y]) {
+                    map[x][y] = true;
+                    mineCount++;
+                    for (int i = x - 1; i <= x + 1; i++) {
+                        for (int j = y - 1; j <= y + 1; j++) {
+                            if (i >= 0 && i < col && j >= 0 && j < row) {
+                                aroundBombNum[i][j]++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
