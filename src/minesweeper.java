@@ -219,8 +219,9 @@ class Game extends JFrame implements ActionListener, MouseListener {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (!gameRunning) {
                 startGame(x, y);
+                isPressed[x][y] = true;
                 gameRunning = true;
-            } else if (!gameOver) {
+            } else if (!gameOver && !isPressed[x][y]) {
 
             }
         }
