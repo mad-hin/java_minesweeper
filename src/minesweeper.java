@@ -92,7 +92,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
         buttons = new JButton[block_width][block_height];
         aroundBombNum = new int[block_width][block_height];
         map = new boolean[block_width][block_height];
-        first_click_location = new int[2];
         minePanel.setLayout(new GridLayout(block_width, block_height));
         gameOver = false;
 
