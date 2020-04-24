@@ -98,11 +98,11 @@ class Game extends JFrame implements ActionListener, MouseListener {
         gameOver = false;
 
         if (block_height == 9 && block_width == 9) {
-            gameMessage.setText("Beginner");
+            gameMessage.setText("Level : Beginner");
         } else if (block_height == 16 && block_width == 16) {
-            gameMessage.setText("Intermediate");
+            gameMessage.setText("Level : Intermediate");
         }else{
-            gameMessage.setText("Expert");
+            gameMessage.setText("Level : Expert");
         }
 
         //add buttons
@@ -159,7 +159,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 view(16, 16, 30);
                 break;
             case "exp":
-                clear(900, 480);
+                clear(890, 480);
                 col = 16;
                 row = 30;
                 view(col, row, 30);
