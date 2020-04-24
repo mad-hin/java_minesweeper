@@ -19,7 +19,6 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private JButton[][] buttons;
     private JPanel minePanel;
     private JLabel gameMessage;
-    private int[] first_click_location = new int[2];
 
     Game() {
         setSize(width, height);
