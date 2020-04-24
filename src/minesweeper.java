@@ -131,6 +131,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
             for (int j = 0; j < row; j++) {
                 buttons[i][j].setText("");
                 buttons[i][j].setBackground(Color.WHITE);
+                map[i][j] = false;
             }
         }
         minePanel.removeAll();
@@ -160,18 +161,19 @@ class Game extends JFrame implements ActionListener, MouseListener {
     }
 
     //Print the whole map on console
-    public void printMap(){
-        for (int i = 0; i < col; i++){
-            for (int j = 0 ;  j < row; j++){
-                if (map[i][j]){
+    public void printMap() {
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < row; j++) {
+                if (map[i][j]) {
                     System.out.print("* ");
-                }else{
-                    System.out.print(aroundBombNum[i][j]+" ");
+                } else {
+                    System.out.print(aroundBombNum[i][j] + " ");
                 }
             }
             System.out.println();
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
@@ -209,7 +211,19 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        String command = ((JButton) e.getSource()).getActionCommand();
+        String[] press = command.split(" ");
+        int x = Integer.parseInt(press[0]);
+        int y = Integer.parseInt(press[1]);
 
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (!gameRunning) {
+                startGame(x, y);
+                gameRunning = true;
+            } else if (!gameOver) {
+
+            }
+        }
     }
 
     @Override
