@@ -130,7 +130,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     public void clear(int w, int h) {
         gameOver = false;
-        gameRunning =false;
+        gameRunning = false;
         width = w;
         height = h;
         setSize(w, h);
@@ -184,19 +184,65 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     //check if game over
     public void check(int x, int y) {
-        if(map[x][y] && !isFlagged[x][y]){
+        if (map[x][y] && !isFlagged[x][y]) {
             buttons[x][y].setBackground(Color.RED);
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < row; j++) {
                     if (map[i][j]) {
                         buttons[i][j].setBackground(Color.RED);
-                    }else if(!map[i][j] && isFlagged[i][j]){
+                    } else if (!map[i][j] && isFlagged[i][j]) {
                         buttons[i][j].setBackground(Color.yellow);
                     }
                 }
             }
-            JOptionPane.showMessageDialog(this, "Game Over", "Game Over",JOptionPane.WARNING_MESSAGE);
+            gameOver = true;
+            JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int[][] direct = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
+            int[] queue_x = new int[col * row];
+            int[] queue_y = new int[col * row];
+            int pop = 0, push = 0;
+
+            queue_x[push] = x;//填入第一個
+            queue_y[push] = y;
+            push++;
+
+            while (pop < push) {
+                int tx = queue_x[pop];
+                int ty = queue_y[pop];
+
+                if (aroundBombNum[tx][ty] == 0)
+                    for (int s = 0; s < 8; s++) {
+                        int fx = tx + direct[s][0];
+                        int fy = ty + direct[s][1];
+                        boolean spread = false;
+
+                        if (inRange(fx, fy) && !isPressed[fx][fy]) {
+                            isPressed[fx][fy] = true;
+                            queue_x[push] = fx;
+                            queue_y[push] = fy;
+                            push++;
+                        }
+                    }
+                pop++;
+            }
+            for (int i = 0; i < push; i++) {
+                turn(queue_x[i], queue_y[i]);
+            }
         }
+    }
+
+    public boolean inRange(int x, int y) {
+        return (x >= 0 && x < col && y >= 0 && y < row);
+    }
+
+    public void turn(int x, int y) {
+        buttons[x][y].setBackground(Color.LIGHT_GRAY);
+        if (aroundBombNum[x][y] > 0) {
+            buttons[x][y].setText(Integer.toString(aroundBombNum[x][y]));
+        }
+        //isTurned[x][y] = true;
+        isPressed[x][y] = true;
     }
 
     @Override
@@ -215,14 +261,14 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 view(9, 9);
                 break;
             case "mid":
-                clear(480, 480);
+                clear(800, 800);
                 col = 16;
                 row = 16;
                 mines = 30;
                 view(16, 16);
                 break;
             case "exp":
-                clear(890, 480);
+                clear(1500, 800);
                 col = 16;
                 row = 30;
                 mines = 99;
@@ -244,12 +290,12 @@ class Game extends JFrame implements ActionListener, MouseListener {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (!gameRunning) {
                 startGame(x, y);
-                check(x,y);
+                check(x, y);
                 isPressed[x][y] = true;
                 gameRunning = true;
             } else if (!gameOver && !isPressed[x][y]) {
                 isPressed[x][y] = true;
-                check(x,y);
+                check(x, y);
             }
         }
     }
