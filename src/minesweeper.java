@@ -17,6 +17,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private int[][] aroundBombNum;
     private boolean[][] map;
     private boolean[][] isPressed;
+    private boolean[][] isFlagged;
     private JButton[][] buttons;
     private JPanel minePanel;
     private JLabel gameMessage;
@@ -93,6 +94,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         buttons = new JButton[block_width][block_height];
         aroundBombNum = new int[block_width][block_height];
         map = new boolean[block_width][block_height];
+        isPressed = new boolean[block_width][block_height];
+        isFlagged = new boolean[block_width][block_height];
         minePanel.setLayout(new GridLayout(block_width, block_height));
         gameOver = false;
 
@@ -109,6 +112,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
             for (int j = 0; j < row; j++) {
                 map[i][j] = false;
                 isPressed[i][j] = false;
+                isFlagged[i][j] = false;
                 buttons[i][j] = new JButton();
                 buttons[i][j].setBackground(Color.WHITE);
                 buttons[i][j].setActionCommand(i + " " + j);
@@ -126,6 +130,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     public void clear(int w, int h) {
         gameOver = false;
+        gameRunning =false;
         width = w;
         height = h;
         setSize(w, h);
@@ -179,8 +184,18 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     //check if game over
     public void check(int x, int y) {
-        if(map[x][y]){
-
+        if(map[x][y] && !isFlagged[x][y]){
+            buttons[x][y].setBackground(Color.RED);
+            for (int i = 0; i < col; i++) {
+                for (int j = 0; j < row; j++) {
+                    if (map[i][j]) {
+                        buttons[i][j].setBackground(Color.RED);
+                    }else if(!map[i][j] && isFlagged[i][j]){
+                        buttons[i][j].setBackground(Color.yellow);
+                    }
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Game Over", "Game Over",JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -229,10 +244,12 @@ class Game extends JFrame implements ActionListener, MouseListener {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (!gameRunning) {
                 startGame(x, y);
+                check(x,y);
                 isPressed[x][y] = true;
                 gameRunning = true;
             } else if (!gameOver && !isPressed[x][y]) {
-
+                isPressed[x][y] = true;
+                check(x,y);
             }
         }
     }
