@@ -196,10 +196,12 @@ class Game extends JFrame implements ActionListener, MouseListener {
             buttons[x][y].setBackground(Color.RED);
             for (int i = 0; i < col; i++) {
                 for (int j = 0; j < row; j++) {
-                    if (map[i][j]) {
+                    if (map[i][j] && !isFlagged[i][j]) {
                         buttons[i][j].setBackground(Color.RED);
                     } else if (!map[i][j] && isFlagged[i][j]) {
                         buttons[i][j].setBackground(Color.yellow);
+                    }else if (map[i][j] && isFlagged[i][j]){
+                        buttons[i][j].setBackground(Color.GREEN);
                     }
                 }
             }
