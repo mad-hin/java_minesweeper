@@ -17,7 +17,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private boolean[][] map;
     private boolean[][] isPressed;
     private JButton[][] buttons;
-    private JPanel minePanel, bombPanel;
+    private JPanel minePanel;
     private JLabel gameMessage;
     private int[] first_click_location = new int[2];
 
@@ -27,6 +27,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         setResizable(false);
         setTitle("Minesweeper");
         setLocationRelativeTo(this);
+
+        //menu bar
         MenuBar menu = new MenuBar();
         setMenuBar(menu);
 
@@ -48,19 +50,26 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
         //second menu : "Level"
         Menu level = new Menu("Level");
+
+        //Beginner level (9x9)
         MenuItem beginner = new MenuItem("Beginner");
         beginner.setActionCommand("beg");
         beginner.addActionListener(this);
+        level.add(beginner);
+
+        //Intermediate level (16x16)
         MenuItem intermediate = new MenuItem("Intermediate");
         intermediate.setActionCommand("mid");
         intermediate.addActionListener(this);
+        level.add(intermediate);
+
+        //Expert level (16x30)
         MenuItem expert = new MenuItem("Expert");
         expert.setActionCommand("exp");
         expert.addActionListener(this);
-        //MenuItem custom = new MenuItem("Custom");
-        level.add(beginner);
-        level.add(intermediate);
         level.add(expert);
+
+        //MenuItem custom = new MenuItem("Custom");
         //level.add(custom);
         menu.add(level);
 
@@ -70,6 +79,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         add(minePanel, BorderLayout.CENTER);
 
         gameRunning = false;
+        gameOver = false;
+
         //make it visible
         setVisible(true);
     }
@@ -83,6 +94,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
         first_click_location = new int[2];
         minePanel.setLayout(new GridLayout(block_width, block_height));
         gameOver = false;
+
+        //add buttons
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
                 map[i][j] = false;
@@ -94,6 +107,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 buttons[i][j].addActionListener(this);
             }
         }
+
+        //make it visible
         minePanel.revalidate();
         minePanel.repaint();
         System.out.println(block_width + " " + block_height + " ");
