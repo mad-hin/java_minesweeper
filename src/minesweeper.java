@@ -20,7 +20,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
     private boolean[][] isPressed;
     private boolean[][] isFlagged;
     private JButton[][] buttons;
-    private JPanel minePanel;
+    private JPanel minePanel,topPenel;
     private JLabel gameMessage;
 
     Game() {
@@ -77,9 +77,11 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
         //interface
         minePanel = new JPanel();
+        topPenel = new JPanel();
         gameMessage = new JLabel();
+        topPenel.add(gameMessage);
+        add(topPenel,BorderLayout.NORTH);
         view(col, row);
-        add(gameMessage, BorderLayout.NORTH);
         add(minePanel, BorderLayout.CENTER);
 
         gameRunning = false;
@@ -216,11 +218,13 @@ class Game extends JFrame implements ActionListener, MouseListener {
                         int fx = tx + direct[s][0];
                         int fy = ty + direct[s][1];
 
-                        if (inRange(fx, fy) && !isPressed[fx][fy]) {
-                            isPressed[fx][fy] = true;
-                            queue_x[push] = fx;
-                            queue_y[push] = fy;
-                            push++;
+                        if (inRange(fx, fy) ) {
+                            if (!isPressed[fx][fy]) {
+                                isPressed[fx][fy] = true;
+                                queue_x[push] = fx;
+                                queue_y[push] = fy;
+                                push++;
+                            }
                         }
                     }
                 pop++;
@@ -296,24 +300,34 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 isPressed[x][y] = true;
                 check(x, y);
             }
-        } else if (e.getButton() == MouseEvent.BUTTON2) {
+        }
+        if (e.getButton() == MouseEvent.BUTTON2) {
+            System.out.println("button2 pressed");
             for (int s = 0; s < 8; s++) {
                 int fx = x + direct[s][0];
                 int fy = y + direct[s][1];
+                System.out.println(fx+" "+fy);
                 if (inRange(fx, fy)) {
-                    if (!map[fx][fy] && !isPressed[fx][fy] && !isFlagged[x][y]) {
+                    if (!map[fx][fy]) {
+                        System.out.println(fx+" "+fy);
                         turn(fx, fy);
                         isPressed[fx][fy] = true;
                     }
                 }
             }
-        }else if(e.getButton() == MouseEvent.BUTTON3){
-            if(!isFlagged[x][y]){
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            if (!isFlagged[x][y]) {
                 buttons[x][y].setBackground(Color.yellow);
                 isFlagged[x][y] = true;
-            }else{
-                isFlagged[x][y]=false;
+                mineCount--;
+                if (mineCount == 0){
+
+                }
+            } else if (isFlagged[x][y]) {
+                isFlagged[x][y] = false;
                 buttons[x][y].setBackground(Color.WHITE);
+                mineCount++;
             }
         }
     }
