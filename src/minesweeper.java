@@ -155,8 +155,23 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 }
             }
         }
+        System.out.println("Mines generated");
+        printMap();
     }
 
+    //Print the whole map on console
+    public void printMap(){
+        for (int i = 0; i < col; i++){
+            for (int j = 0 ;  j < row; j++){
+                if (map[i][j]){
+                    System.out.print("* ");
+                }else{
+                    System.out.print(aroundBombNum[i][j]+" ");
+                }
+            }
+            System.out.println();
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
