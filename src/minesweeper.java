@@ -101,6 +101,8 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
     public void clear(int w, int h) {
         gameOver = false;
+        width = w;
+        height = h;
         setSize(w, h);
         for (int i = 0; i < col; i++) {
             for (int j = 0; j < row; j++) {
@@ -108,6 +110,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 buttons[i][j].setBackground(Color.WHITE);
             }
         }
+        minePanel.removeAll();
     }
 
     @Override
@@ -135,6 +138,10 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 col = 16;
                 row = 30;
                 boomview(col, row, 30);
+                break;
+            case "re":
+                clear(width, height);
+                break;
         }
     }
 
