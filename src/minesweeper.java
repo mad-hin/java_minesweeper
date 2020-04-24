@@ -75,7 +75,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
 
         //interface
         minePanel = new JPanel();
-        view(col, row, mines);
+        boomview(col, row, mines);
         add(minePanel, BorderLayout.CENTER);
 
         gameRunning = false;
@@ -85,7 +85,7 @@ class Game extends JFrame implements ActionListener, MouseListener {
         setVisible(true);
     }
 
-    public void view(int block_width, int block_height, int bomballnum) {
+    public void boomview(int block_width, int block_height, int bomballnum) {
         minePanel.removeAll();
         int mineCount = 0, location = 0;
         buttons = new JButton[block_width][block_height];
@@ -140,19 +140,19 @@ class Game extends JFrame implements ActionListener, MouseListener {
                 clear(480, 480);
                 col = 9;
                 row = 9;
-                view(9, 9, 10);
+                boomview(9, 9, 10);
                 break;
             case "mid":
                 clear(480, 480);
                 col = 16;
                 row = 16;
-                view(16, 16, 30);
+                boomview(16, 16, 30);
                 break;
             case "exp":
                 clear(900, 480);
                 col = 16;
                 row = 30;
-                view(col, row, 30);
+                boomview(col, row, 30);
                 break;
             case "re":
                 clear(width, height);
